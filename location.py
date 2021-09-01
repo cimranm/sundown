@@ -1,4 +1,13 @@
 #! /usr/bin/env python3
 
+from  geopy.geocoders import Nominatim
+
 def get_location():
-    return (42, 42)
+
+    geolocator = Nominatim(user_agent="http")
+
+    country     = "Australia"
+    city        = "Sydney"
+
+    loc = geolocator.geocode (f'{city},{country}')
+    return (loc.latitude, loc.longitude)

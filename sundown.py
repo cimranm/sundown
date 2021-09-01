@@ -3,43 +3,36 @@
 from datetime import date
 from suntime import Sun, SunTimeException
 
-
 import location 
-from  geopy.geocoders import Nominatim
 
+def get_sun():
 
+    lat, long = location.get_location()
 
-geolocator = Nominatim(user_agent="http")
+    # Suntime
+    sun = Sun(lat, long)
+    return sun
 
-country     = "Australia"
-city        = "Sydney"
+def rise_print():
+    # SUNRISE
+    date = get_date()
+    sun = get_sun()
+    time = sun.get_local_sunrise_time(date)
 
+    print (f"RISE: {time.strftime('%H:%M')}")
 
+def set_print():
+    # SUNSET
+    date = get_date()
+    sun = get_sun()
+    time = sun.get_local_sunset_time(date)
 
-loc = geolocator.geocode (f'{city},{country}')
+    print (f"SET: {time.strftime('%H:%M')}")
 
-lat  = loc.latitude
-long = loc.longitude
-
-# Suntime
-
-sun = Sun(lat, long)
-
-date = date.today()
-
-
-
-risetime    = sun.get_local_sunrise_time(date)
-settime     = sun.get_local_sunset_time(date)
-
-print (f"RISE: {risetime.strftime('%H:%M')}")
-
-print (f"SET: {settime.strftime('%H:%M')}")
-#settime     = sun.get_sunset
-
-
-
-
+def get_date():
+    
+    # TODO allow for specific dates
+    return date.today()
 
 
 
